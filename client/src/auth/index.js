@@ -1,3 +1,4 @@
+import { collapseClasses } from "@mui/material";
 import React, { createContext, useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom'
 import api from './auth-request-api'
@@ -69,7 +70,7 @@ function AuthContextProvider(props) {
         }
     }
 
-    auth.registerUser = async function(firstName, lastName, email, password, passwordVerify) {
+    auth.registerUser = async function(firstName, lastName, email, password, passwordVerify, store) {
         const response = await api.registerUser(firstName, lastName, email, password, passwordVerify);      
         if (response.status === 200) {
             authReducer({
@@ -78,21 +79,27 @@ function AuthContextProvider(props) {
                     user: response.data.user
                 }
             })
-            history.push("/login");
+            history.push("/");
+            store.loadIdNamePairs();
+        }else{
+            console.log("error");
         }
     }
 
-    auth.loginUser = async function(email, password) {
-        const response = await api.loginUser(email, password);
-        if (response.status === 200) {
-            authReducer({
-                type: AuthActionType.LOGIN_USER,
-                payload: {
-                    user: response.data.user
-                }
-            })
-            history.push("/");
-        }
+    auth.loginUser = async function(email, password, store) {
+        try{
+            const response = await api.loginUser(email, password);
+            if (response.status === 200) {
+                authReducer({
+                    type: AuthActionType.LOGIN_USER,
+                    payload: {
+                        user: response.data.user
+                    }
+                })
+                history.push("/");
+                store.loadIdNamePairs();
+            }
+        }catch(error){console.log(error)}
     }
 
     auth.logoutUser = async function() {

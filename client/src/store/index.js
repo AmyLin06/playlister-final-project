@@ -287,7 +287,10 @@ function GlobalStoreContextProvider(props) {
         async function asyncLoadIdNamePairs() {
             const response = await api.getPlaylistPairs();
             if (response.data.success) {
+                // let pairsArray = response.data.idNamePairs.filter(pair => pair.ownerEmail === auth.user.email);
+                // let pairsArray = auth.user.playlists;
                 let pairsArray = response.data.idNamePairs;
+                console.log(pairsArray);
                 storeReducer({
                     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
                     payload: pairsArray

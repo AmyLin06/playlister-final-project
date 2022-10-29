@@ -12,9 +12,11 @@ import Link from '@mui/material/Link';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import GlobalStoreContext from '../store';
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
+    const { store } = useContext(GlobalStoreContext);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -24,7 +26,8 @@ export default function RegisterScreen() {
             formData.get('lastName'),
             formData.get('email'),
             formData.get('password'),
-            formData.get('passwordVerify')
+            formData.get('passwordVerify'),
+            store
         );
     };
 
@@ -106,6 +109,7 @@ export default function RegisterScreen() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
+                            // onClick={handleSubmit}
                         >
                             Sign Up
                         </Button>

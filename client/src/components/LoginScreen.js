@@ -15,16 +15,22 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import GlobalStoreContext from '../store';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
-
+    const { store } = useContext(GlobalStoreContext);
+    
     const handleSubmit = (event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
+        // if(auth.error){
+        //     console.log(auth.errorMessage);
+        // }
         auth.loginUser(
             formData.get('email'),
-            formData.get('password')
+            formData.get('password'),
+            store
         );
 
     };
