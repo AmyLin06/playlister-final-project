@@ -49,6 +49,7 @@ function ListCard(props) {
 
     async function handleDeleteList(event, id) {
         event.stopPropagation();
+        event.preventDefault();
         let _id = event.target.id;
         _id = ("" + _id).substring("delete-list-".length);
         store.markListForDeletion(id);

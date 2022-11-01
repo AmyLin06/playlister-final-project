@@ -16,6 +16,7 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import GlobalStoreContext from '../store';
+import MUIErrorAlert from './MUIErrorAlert';
 
 export default function LoginScreen() {
     const { auth } = useContext(AuthContext);
@@ -34,6 +35,11 @@ export default function LoginScreen() {
         );
 
     };
+
+    let errorModalJSX = "";
+    if(auth.errorMessage !== null){
+        errorModalJSX =  <MUIErrorAlert />
+    }
 
     return (
         <Grid container component="main" sx={{ height: '100vh' }}>
@@ -62,6 +68,7 @@ export default function LoginScreen() {
                         alignItems: 'center',
                     }}
                 >
+                    {errorModalJSX}
                     <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>

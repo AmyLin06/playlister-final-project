@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import GlobalStoreContext from '../store';
+import MUIErrorAlert from './MUIErrorAlert';
 
 export default function RegisterScreen() {
     const { auth } = useContext(AuthContext);
@@ -31,9 +32,15 @@ export default function RegisterScreen() {
         );
     };
 
+    let errorModalJSX = "";
+    if(auth.errorMessage !== null){
+        errorModalJSX =  <MUIErrorAlert />
+    }
+
     return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
+                {errorModalJSX}
                 <Box
                     sx={{
                         marginTop: 8,

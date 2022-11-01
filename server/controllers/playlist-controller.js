@@ -65,10 +65,13 @@ deletePlaylist = async (req, res) => {
                     console.log("correct user!");
                     Playlist.findOneAndDelete({ _id: req.params.id }, () => {
                         /////TEST CODE NOT SURE IF CORRECT/////
-                        // user.playlists = await user.playlists.filter(playlistId => playlistId !== req.params.id);
                         // console.log("TEST" + user.playlists);
-                        // user.save().then(() => {return res.status(200).json({})});
-                        return res.status(200).json({});
+                        // console.log("Test param" + req.params.id);
+                        user.playlists = user.playlists.filter(playlistId => playlistId != req.params.id);
+                        // console.log("TEST" + user.playlists);
+                        user.save().then(() => {return res.status(200).json({})});
+
+                        // return res.status(200).json({});
                     }).catch(err => console.log(err))
                 }
                 else {

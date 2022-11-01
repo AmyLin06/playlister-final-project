@@ -11,13 +11,15 @@ export const AuthActionType = {
     GET_LOGGED_IN: "GET_LOGGED_IN",
     LOGIN_USER: "LOGIN_USER",
     LOGOUT_USER: "LOGOUT_USER",
-    REGISTER_USER: "REGISTER_USER"
+    REGISTER_USER: "REGISTER_USER",
+    ERROR_ALERT: "ERROR_ALERT"
 }
 
 function AuthContextProvider(props) {
     const [auth, setAuth] = useState({
         user: null,
-        loggedIn: false
+        loggedIn: false,
+        errorMessage: null
     });
     const history = useHistory();
 
@@ -31,25 +33,36 @@ function AuthContextProvider(props) {
             case AuthActionType.GET_LOGGED_IN: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: payload.loggedIn
+                    loggedIn: payload.loggedIn,
+                    errorMessage: null
                 });
             }
             case AuthActionType.LOGIN_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: null
                 })
             }
             case AuthActionType.LOGOUT_USER: {
                 return setAuth({
                     user: null,
-                    loggedIn: false
+                    loggedIn: false,
+                    errorMessage: null
                 })
             }
             case AuthActionType.REGISTER_USER: {
                 return setAuth({
                     user: payload.user,
-                    loggedIn: true
+                    loggedIn: true,
+                    errorMessage: null
+                })
+            }
+            case AuthActionType.ERROR_ALERT: {
+                return setAuth({
+                    user: null,
+                    loggedIn: false,
+                    errorMessage: payload
                 })
             }
             default:
@@ -86,7 +99,12 @@ function AuthContextProvider(props) {
                 console.log("error");
             }
         }catch(error){
-            alert(error.response.data.errorMessage);
+            // alert(error.response.data.errorMessage);
+            authReducer({
+                type: AuthActionType.ERROR_ALERT,
+                payload: error.response.data.errorMessage
+
+            })
         };
     }
 
@@ -104,7 +122,12 @@ function AuthContextProvider(props) {
                 store.loadIdNamePairs();
             }
         }catch(error){
-            alert(error.response.data.errorMessage);
+            // alert(error.response.data.errorMessage);
+            authReducer({
+                type: AuthActionType.ERROR_ALERT,
+                payload: error.response.data.errorMessage
+
+            })
         };
     }
 
@@ -127,6 +150,13 @@ function AuthContextProvider(props) {
         }
         console.log("user initials: " + initials);
         return initials;
+    }
+
+    auth.closeErrorAlert = function() {
+        authReducer( {
+            type: AuthActionType.ERROR_ALERT,
+            payload: null
+        })
     }
 
     return (
