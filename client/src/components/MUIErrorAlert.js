@@ -38,12 +38,12 @@ export default function MUIErrorAlert() {
             // onClose={handleCloseErrorAlert}
         >
             <Box sx={style}>
-                <Box>
+                {/* <Box> */}
                     <Alert severity='error'>
                         {auth.errorMessage}
-                        <Button sx={buttonStyle} onClick={handleCloseErrorAlert}>OK</Button>
+                        <Button sx={buttonStyle} onClick={handleCloseErrorAlert}>Confirm</Button>
                     </Alert>
-                </Box>
+                {/* </Box> */}
             </Box>
         </Modal>
     );
