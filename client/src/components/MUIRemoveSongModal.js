@@ -14,7 +14,7 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-    height: 150
+    height: 75
 };
 
 export default function MUIRemoveSongModal() {
