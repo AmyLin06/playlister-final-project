@@ -94,6 +94,7 @@ export default function AppBanner() {
     }
 
     return (
+        <div id="app-banner">
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
@@ -125,5 +126,6 @@ export default function AppBanner() {
                 menu
             }
         </Box>
+        </div>
     );
 }

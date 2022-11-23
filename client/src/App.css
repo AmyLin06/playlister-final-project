@@ -53,6 +53,10 @@ body {
   border-style: solid;
   border-radius: 10px;
 }
+#app-banner {
+  height: 9%;
+}
+
 #splash-screen {
   background-image: linear-gradient(to bottom, #b8b808, #636723);
   color: white;
@@ -69,9 +73,21 @@ body {
   vertical-align: center;
 }
 
+#home-screen{
+  position: absolute;
+  width: 100%;
+  height: 91%;
+}
+
 #edit-toolbar {
   background-color: transparent;
   float: right;
+}
+
+#app-toolbar {
+  position: relative;
+  height: 10%;
+  background-color: lightblue;
 }
 
 .top5-button,
@@ -112,7 +128,7 @@ body {
   background-color: var(--swatch-accent);
 }
 
-#top5-statusbar {
+#playlister-statusbar {
   position: absolute;
   left: 0%;
   top: 90%;
@@ -143,15 +159,21 @@ body {
   float: left;
 }
 
-#list-selector-list {
-  position: absolute;
-  left: 0%;
-  top: 10%;
-  width: 100%;
-  height: 90%;
+#list-selector-list{
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: scroll;
+}
+#playlist-youtube-container {
+  position: relative;
+  left: 0%;
+  /* top: 20%; */
+  width: 100%;
+  height: 80%;
+  display: flex;
+  /* flex-direction: column; */
+  /* overflow: scroll; */
 }
 
 .list-card,

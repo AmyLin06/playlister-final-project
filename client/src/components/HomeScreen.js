@@ -2,11 +2,15 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
+import AppToolbar from './AppToolbar'
+import Statusbar from './Statusbar';
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
+import { Grid } from '@mui/material';
+
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -38,8 +42,8 @@ const HomeScreen = () => {
             </List>;
     }
     return (
-        <div id="playlist-selector">
-            <div id="list-selector-heading">
+        <div id="home-screen" >
+            {/* <div id="list-selector-heading">
             <Fab 
                 color="primary" 
                 aria-label="add"
@@ -49,13 +53,25 @@ const HomeScreen = () => {
                 <AddIcon />
             </Fab>
                 <Typography variant="h2">Your Lists</Typography>
-            </div>
-            <div id="list-selector-list">
-                {
-                    listCard
-                }
+            </div> */}
+
+            <AppToolbar />
+            <div id="playlist-youtube-container">
+                <Grid container>
+                    {/* <Grid item xs={12} id="app-toolbar">
+                        <AppToolbar />
+                    </Grid> */}
+                    <Grid item xs={8} id="list-selector-list">
+                        {listCard}                 
+                    </Grid>
+                    <Grid item xs={4}>
+                        SPACE FOR YOUTUBE
+                    </Grid>
+                </Grid>
                 <MUIDeleteModal />
             </div>
+
+            <Statusbar />
         </div>)
 }
 

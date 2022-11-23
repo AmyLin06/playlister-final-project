@@ -12,9 +12,10 @@ function Statusbar() {
     const { store } = useContext(GlobalStoreContext);
     const { auth } = useContext(AuthContext);
 
-    let text ="";
+    let text ="Add List";
     if (store.currentList && auth.loggedIn)
         text = store.currentList.name;
+    
     return (
         <div id="playlister-statusbar">
             <Typography variant="h4">{text}</Typography>
