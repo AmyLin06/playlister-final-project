@@ -6,6 +6,7 @@ import MUIRemoveSongModal from './MUIRemoveSongModal'
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import { GlobalStoreContext } from '../store/index.js'
+import EditToolbar from './EditToolbar.js'
 
 /*
     This React component lets us edit a loaded list, which only
@@ -19,25 +20,28 @@ function WorkspaceScreen() {
 
     const {id} = useParams();
 
-    useEffect(() => {
-        console.log("TEST" + id);
-        if(store.currentList == null){
-            console.log("ERROR");
-            store.history.push('/');
-        }
-    })
+    // useEffect(() => {
+    //     console.log("TEST" + id);
+    //     if(store.currentList == null){
+    //         console.log("ERROR");
+    //         store.history.push('/');
+    //     }
+    // })
 
-    let modalJSX = "";
-    if (store.isEditSongModalOpen()) {
-        modalJSX = <MUIEditSongModal />;
-    }
-    else if (store.isRemoveSongModalOpen()) {
-        modalJSX = <MUIRemoveSongModal />;
-    }
+    // let modalJSX = "";
+    // if (store.isEditSongModalOpen()) {
+    //     modalJSX = <MUIEditSongModal />;
+    // }
+    // else if (store.isRemoveSongModalOpen()) {
+    //     modalJSX = <MUIRemoveSongModal />;
+    // }
     
     let JSX = "";
     if(store.currentList !== null){
         console.log("ERROR");
+        if(store.currentList.songs.length == 0){
+            return(<div>No songs</div>)
+        }
         JSX = store.currentList.songs.map((song, index) => (
             <SongCard
                 id={'playlist-song-' + (index)}
@@ -49,10 +53,11 @@ function WorkspaceScreen() {
     }
 
     return (
-        <Box>
+        <Box 
+            style={{maxHeight: 250, overflow: 'scroll'}}>
         <List 
             id="playlist-cards" 
-            sx={{ width: '100%', bgcolor: 'background.paper' }}
+            sx={{ width: '100%'}}
         >
             {
                 // store.currentList.songs.map((song, index) => (
@@ -65,8 +70,9 @@ function WorkspaceScreen() {
                 // ))  
                 JSX
             }
-         </List>            
-         { modalJSX }
+         </List> 
+         {/* <EditToolbar/>            */}
+         {/* { modalJSX }       */}
          </Box>
     )
 }

@@ -1,11 +1,19 @@
 import { useContext, useState } from 'react'
 import { GlobalStoreContext } from '../store'
+import WorkspaceScreen from './WorkspaceScreen';
+import EditToolbar from './EditToolbar';
+
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
+import { Grid, Typography } from '@mui/material';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -18,6 +26,7 @@ function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
+    const [dropDownActive, setDropDownActive] = useState(false);
     const { idNamePair, selected } = props;
 
     function handleLoadList(event, id) {
@@ -47,6 +56,18 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
+    function handleToggleDropDown(event) {
+        event.stopPropagation();
+        let newActive = !dropDownActive;
+        if(newActive) {
+            handleLoadList(event, idNamePair._id);
+        }else{
+            store.closeCurrentList();
+        }
+        console.log("dropdown state" + newActive);
+        setDropDownActive(newActive);
+    }
+
     async function handleDeleteList(event, id) {
         event.stopPropagation();
         // event.preventDefault();
@@ -74,31 +95,68 @@ function ListCard(props) {
     if (store.isListNameEditActive) {
         cardStatus = true;
     }
+
+    let expandedListContent = "";
+    let arrow = <KeyboardDoubleArrowDownIcon/>
+    if(dropDownActive){
+        expandedListContent = 
+            <Grid container>
+                <Grid item xs={12}>
+                        <WorkspaceScreen />
+                </Grid>
+                <Grid item xs={12}>
+                    <EditToolbar/>
+                </Grid>
+            </Grid>
+        arrow = <KeyboardDoubleArrowUpIcon />
+    }
+
     let cardElement =
         <ListItem
             id={idNamePair._id}
             key={idNamePair._id}
-            sx={{ marginTop: '15px', display: 'flex', p: 1 }}
-            style={{ width: '100%', fontSize: '48pt' }}
-            button
-            onClick={(event) => {
-                handleLoadList(event, idNamePair._id)
-            }}
+            sx={{display: 'flex', p: 1 , flexDirection: 'column'}}
+            style={{ width: '100%', fontSize: '48pt'}}
+            // button
+            // onClick={(event) => {
+            //     handleLoadList(event, idNamePair._id)
+            // }}
         >
-            <Box sx={{ p: 1, flexGrow: 1 }}>{idNamePair.name}</Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                    <EditIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box>
-            <Box sx={{ p: 1 }}>
-                <IconButton onClick={(event) => {
-                        handleDeleteList(event, idNamePair._id)
-                    }} aria-label='delete'>
-                    <DeleteIcon style={{fontSize:'48pt'}} />
-                </IconButton>
-            </Box>
+            <Grid container>
+                <Grid item xs={7}>
+                    <Box sx={{ p: 1, flexGrow: 1, fontSize: 30, padding: 0}}>
+                        <Typography sx={{fontSize: 30, display: 'inline', overflowWrap: 'break-word'}}>{idNamePair.name}</Typography>
+                        <IconButton onClick={handleToggleEdit} aria-label='edit'>
+                            <EditIcon style={{fontSize:'20pt'}} />
+                        </IconButton>
+                        <IconButton onClick={(event) => {
+                                handleDeleteList(event, idNamePair._id)
+                            }} aria-label='delete'>
+                            <DeleteIcon style={{fontSize:'20pt'}} />
+                        </IconButton>
+                    </Box>  
+                    <Typography sx={{fontSize: 15}}>By:</Typography>    
+                </Grid>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={4}>
+                    <IconButton><ThumbUpIcon/></IconButton>
+                    <IconButton><ThumbDownIcon/></IconButton>
+                </Grid>
+                
+                <Grid item xs={8}><Typography sx={{fontSize: 15}}>Published:</Typography></Grid>
+                <Grid item xs={4}><Typography>Listens:</Typography></Grid>
+                
+                {expandedListContent}
+
+                <Grid item xs={11}></Grid>
+                <Grid item xs={1} >
+                    <Typography>
+                        <IconButton onClick={handleToggleDropDown}>{arrow}</IconButton>
+                    </Typography>
+                </Grid>
+            </Grid>
         </ListItem>
+
 
     if (editActive) {
         cardElement =
@@ -117,8 +175,9 @@ function ListCard(props) {
                 inputProps={{style: {fontSize: 48}}}
                 InputLabelProps={{style: {fontSize: 24}}}
                 autoFocus
-            />
+            />       
     }
+
     return (
         cardElement
     );

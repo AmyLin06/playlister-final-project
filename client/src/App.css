@@ -9,7 +9,7 @@
   --swatch-foundation: #eeeedd;
   --swatch-primary: #e6e6e6;
   --swatch-complement: #e1e4cb;
-  --swatch-contrast: #111111;
+  --swatch-contrast: #def0c5;
   --swatch-accent: #669966;
   --swatch-status: #123456;
   --my-font-family: "Robaaaoto";
@@ -81,7 +81,8 @@ body {
 
 #edit-toolbar {
   background-color: transparent;
-  float: right;
+  /* float: right; */
+  float: left;
 }
 
 #app-toolbar {
@@ -196,7 +197,7 @@ body {
 .unselected-list-card:hover {
   cursor: pointer;
   background-color: var(--swatch-contrast);
-  color: white;
+  /* color: white; */
 }
 
 .selected-list-card {
@@ -211,6 +212,7 @@ body {
 .list-card-button {
   float: right;
   transform: scale(2);
+  color: white;
 }
 
 #workspace-home,

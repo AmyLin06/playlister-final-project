@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
+import MUIRemoveSongModal from './MUIRemoveSongModal'
+import MUIEditSongModal from './MUIEditSongModal'
 import AppToolbar from './AppToolbar'
 import Statusbar from './Statusbar';
 
@@ -29,7 +31,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }}>
+            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }} disablePadding>
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
@@ -41,21 +43,21 @@ const HomeScreen = () => {
             }
             </List>;
     }
+
+    let modalJSX = "";
+    if (store.isEditSongModalOpen()) {
+        modalJSX = <MUIEditSongModal />;
+    }
+    else if (store.isRemoveSongModalOpen()) {
+        modalJSX = <MUIRemoveSongModal />;
+    }else if(store.isDeleteListModalOpen()) {
+        modalJSX = <MUIDeleteModal />;
+    }
+
     return (
         <div id="home-screen" >
-            {/* <div id="list-selector-heading">
-            <Fab 
-                color="primary" 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                <Typography variant="h2">Your Lists</Typography>
-            </div> */}
-
             <AppToolbar />
+
             <div id="playlist-youtube-container">
                 <Grid container>
                     {/* <Grid item xs={12} id="app-toolbar">
@@ -68,7 +70,7 @@ const HomeScreen = () => {
                         SPACE FOR YOUTUBE
                     </Grid>
                 </Grid>
-                <MUIDeleteModal />
+                {modalJSX}
             </div>
 
             <Statusbar />

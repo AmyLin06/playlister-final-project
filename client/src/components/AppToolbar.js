@@ -27,7 +27,11 @@ function AppToolbar() {
             open={isSortMenuOpen}
             onClose={handleSortMenuClose}
         >
-            <MenuItem>A-Z</MenuItem>
+            <MenuItem>Name (A-Z)</MenuItem>
+            <MenuItem>Publish Date (Newest)</MenuItem>
+            <MenuItem>Listens (High - Low)</MenuItem>
+            <MenuItem>Likes (High - Low)</MenuItem>
+            <MenuItem>Dislikes (High - Low)</MenuItem>
         </Menu>
 
     return(
@@ -57,10 +61,10 @@ function AppToolbar() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        {sortPlaylistMenu}
                     </Grid>
                 </Grid>
             </Toolbar> 
+            {sortPlaylistMenu}
         </div>      
     );
 }
