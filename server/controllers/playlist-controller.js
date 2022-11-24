@@ -131,13 +131,14 @@ getPlaylistPairs = async (req, res) => {
                 }
                 else {
                     console.log("Send the Playlist pairs");
-                    // PUT ALL THE LISTS INTO ID, NAME PAIRS
+                    // PUT ALL THE LISTS INTO ID, NAME, USERNAME PAIRS
                     let pairs = [];
                     for (let key in playlists) {
                         let list = playlists[key];
                         let pair = {
                             _id: list._id,
-                            name: list.name
+                            name: list.name,
+                            ownerUsername: list.ownerUsername
                         };
                         pairs.push(pair);
                     }

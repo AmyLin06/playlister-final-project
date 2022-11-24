@@ -135,7 +135,7 @@ function ListCard(props) {
                             <DeleteIcon style={{fontSize:'20pt'}} />
                         </IconButton>
                     </Box>  
-                    <Typography sx={{fontSize: 15}}>By:</Typography>    
+                    <Typography sx={{fontSize: 15}}>By: {idNamePair.ownerUsername}</Typography>    
                 </Grid>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={4}>

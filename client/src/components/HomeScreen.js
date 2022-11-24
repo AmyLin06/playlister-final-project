@@ -12,6 +12,8 @@ import Fab from '@mui/material/Fab'
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography'
 import { Grid } from '@mui/material';
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -68,6 +70,10 @@ const HomeScreen = () => {
                     </Grid>
                     <Grid item xs={4}>
                         SPACE FOR YOUTUBE
+                        {/* <Tabs>
+                            <Tab label="Player"/>
+                            <Tab label="Comment"/>
+                        </Tabs> */}
                     </Grid>
                 </Grid>
                 {modalJSX}
