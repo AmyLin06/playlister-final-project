@@ -30,6 +30,7 @@ const App = () => {
                     <AppBanner />
                     <Switch>
                         <Route path="/" exact component={HomeWrapper} />
+                        {/* <Route path="/search_by_playlist_name/" exact component={HomeWrapper}/> */}
                         <Route path="/login/" exact component={LoginScreen} />
                         <Route path="/register/" exact component={RegisterScreen} />
                         {/* <Route path="/playlist/:id" exact component={WorkspaceScreen} /> */}

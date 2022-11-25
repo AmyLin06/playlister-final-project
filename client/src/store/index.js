@@ -321,6 +321,44 @@ function GlobalStoreContextProvider(props) {
         }
         asyncLoadIdNamePairs();
     }
+    store.loadSearchResults = function(searchScreen, searchInput) {
+        async function asyncLoadIdNamePairs() {
+            const response = await api.getPlaylists();
+            if (response.data.success) {
+                let pairsArray = response.data.data;
+                if(searchScreen == 'playlistNameSearchScreen'){
+                    pairsArray = pairsArray.filter(pair => pair.name.includes(searchInput));
+                }else if(searchScreen == 'usernameSearchScreen'){
+                    pairsArray = pairsArray.filter(pair => pair.ownerUsername.includes(searchInput));
+                }
+                console.log(pairsArray);
+                storeReducer({
+                    type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                    payload: pairsArray
+                });
+            }
+            else {
+                console.log("API FAILED TO GET THE LIST PAIRS");
+            }
+        }
+        asyncLoadIdNamePairs(searchScreen, searchInput);
+    }
+
+    store.loadSortedPlaylist = function(sortType) {
+        switch(sortType){
+            case "name": {
+                store.idNamePairs.sort(function(a, b){
+                    if(a.name < b.name) { return -1; }
+                    if(a.name > b.name) { return 1; }
+                    return 0;
+                })
+            }
+        }
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+            payload: store.idNamePairs
+        });
+    }
 
     // THE FOLLOWING 5 FUNCTIONS ARE FOR COORDINATING THE DELETION
     // OF A LIST, WHICH INCLUDES USING A VERIFICATION MODAL. THE
