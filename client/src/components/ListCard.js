@@ -100,21 +100,23 @@ function ListCard(props) {
         cardStatus = true;
     }
 
+
     let expandedListContent = "";
     let arrow = <IconButton onClick={handleArrowDown} style={{padding: 0}}><KeyboardDoubleArrowDownIcon/></IconButton>
+
     if(store.currentList !== null){
-    if(store.currentList._id == idNamePair._id){
-        expandedListContent = 
-            <Grid container>
-                <Grid item xs={12}>
-                        <WorkspaceScreen selectedPlaylist={idNamePair} />
+        if(store.currentList._id == idNamePair._id){
+            expandedListContent = 
+                <Grid container>
+                    <Grid item xs={12}>
+                            <WorkspaceScreen selectedPlaylist={idNamePair} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <EditToolbar/>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <EditToolbar/>
-                </Grid>
-            </Grid>
-        arrow = <IconButton onClick={handleArrowUp}><KeyboardDoubleArrowUpIcon /></IconButton>
-    }
+            arrow = <IconButton onClick={handleArrowUp}><KeyboardDoubleArrowUpIcon /></IconButton>
+        }
     }
 
     let cardElement =
@@ -150,8 +152,8 @@ function ListCard(props) {
                 </Grid>
                 
                 {expandedListContent}
-                
-                <Grid item xs={7}><Typography sx={{fontSize: 15}}>Published:</Typography></Grid>
+
+                <Grid item xs={7}><Typography sx={{fontSize: 15}}>Published: {idNamePair.publishedDate}</Typography></Grid>
                 <Grid item xs={4}><Typography>Listens:</Typography></Grid>
                 <Grid item xs={1}><Typography>{arrow}</Typography></Grid>
                 

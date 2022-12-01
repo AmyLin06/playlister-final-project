@@ -599,24 +599,24 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.publishPlaylist = function () {
-        // async function asyncPublishPlaylist() {
-        //     let response = await api.getPlaylistById(store.currentList._id);
-        //     if(response.data.success) {
-        //         let playlist = response.data.playlist;
-        //         const date = new Date().toJSON().slice(0, 10);
-        //         // let dateYear = date.getFullYear();
-        //         // console.log("TESTTTTTTTTT", typeof date)
-        //         playlist.publishedDate = date;
-        //         async function asyncupdateList(playlist) {
-        //             response = await api.updatePlaylistById(playlist._id, playlist);
-        //             if(response.data.success) {
-        //                 store.loadIdNamePairs();
-        //             }
-        //         }
-        //         asyncupdateList(playlist);
-        //     }
-        // }
-        // asyncPublishPlaylist();
+        async function asyncPublishPlaylist() {
+            let response = await api.getPlaylistById(store.currentList._id);
+            if(response.data.success) {
+                let playlist = response.data.playlist;
+                const date = new Date().toJSON().slice(0, 10);
+                // let dateYear = date.getFullYear();
+                // console.log("TESTTTTTTTTT", typeof date)
+                playlist.publishedDate = date;
+                async function asyncUpdateList(playlist) {
+                    response = await api.updatePlaylistById(playlist._id, playlist);
+                    if(response.data.success) {
+                        store.loadIdNamePairs();
+                    }
+                }
+                asyncUpdateList(playlist);
+            }
+        }
+        asyncPublishPlaylist();
     }
 
     return (

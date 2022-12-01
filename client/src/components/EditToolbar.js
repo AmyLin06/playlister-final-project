@@ -40,6 +40,20 @@ function EditToolbar() {
         store.publishPlaylist()
     }
     
+    if(store.currentList !== null && store.currentList.publishedDate !== undefined){
+        return(
+            <div id="edit-toolbar">
+                <Button
+                    id='duplicate-playlist-button'
+                    variant='contained'
+                    startIcon={<ContentCopyIcon/>}
+                    style={editToolbarButtonStyle}>
+                        Duplicate
+                </Button>
+            </div>
+        );
+    }
+
     return (
         <div id="edit-toolbar">
             <Grid container>
