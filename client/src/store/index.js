@@ -231,6 +231,7 @@ function GlobalStoreContextProvider(props) {
         }
     }
 
+
     // THESE ARE THE FUNCTIONS THAT WILL UPDATE OUR STORE AND
     // DRIVE THE STATE OF THE APPLICATION. WE'LL CALL THESE IN 
     // RESPONSE TO EVENTS INSIDE OUR COMPONENTS.
@@ -595,6 +596,27 @@ function GlobalStoreContextProvider(props) {
             type: GlobalStoreActionType.SET_LIST_NAME_EDIT_ACTIVE,
             payload: null
         });
+    }
+
+    store.publishPlaylist = function () {
+        // async function asyncPublishPlaylist() {
+        //     let response = await api.getPlaylistById(store.currentList._id);
+        //     if(response.data.success) {
+        //         let playlist = response.data.playlist;
+        //         const date = new Date().toJSON().slice(0, 10);
+        //         // let dateYear = date.getFullYear();
+        //         // console.log("TESTTTTTTTTT", typeof date)
+        //         playlist.publishedDate = date;
+        //         async function asyncupdateList(playlist) {
+        //             response = await api.updatePlaylistById(playlist._id, playlist);
+        //             if(response.data.success) {
+        //                 store.loadIdNamePairs();
+        //             }
+        //         }
+        //         asyncupdateList(playlist);
+        //     }
+        // }
+        // asyncPublishPlaylist();
     }
 
     return (

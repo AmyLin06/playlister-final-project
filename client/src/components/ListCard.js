@@ -26,7 +26,7 @@ function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
-    const [dropDownActive, setDropDownActive] = useState(false);
+    // const [dropDownActive, setDropDownActive] = useState(false);
     const { idNamePair, selected } = props;
 
     function handleLoadList(event, id) {
@@ -56,16 +56,20 @@ function ListCard(props) {
         setEditActive(newActive);
     }
 
-    function handleToggleDropDown(event) {
+    function handleArrowDown(event) {
         event.stopPropagation();
-        let newActive = !dropDownActive;
-        if(newActive) {
+        // let newActive = !dropDownActive;
+        // if(newActive) {
             handleLoadList(event, idNamePair._id);
-        }else{
-            store.closeCurrentList();
-        }
-        console.log("dropdown state" + newActive);
-        setDropDownActive(newActive);
+        // }else{
+        //     store.closeCurrentList();
+        // }
+        // console.log("dropdown state" + newActive);
+        // setDropDownActive(newActive);
+    }
+
+    function handleArrowUp(event) {
+        store.closeCurrentList();
     }
 
     async function handleDeleteList(event, id) {
@@ -97,18 +101,20 @@ function ListCard(props) {
     }
 
     let expandedListContent = "";
-    let arrow = <KeyboardDoubleArrowDownIcon/>
-    if(dropDownActive){
+    let arrow = <IconButton onClick={handleArrowDown} style={{padding: 0}}><KeyboardDoubleArrowDownIcon/></IconButton>
+    if(store.currentList !== null){
+    if(store.currentList._id == idNamePair._id){
         expandedListContent = 
             <Grid container>
                 <Grid item xs={12}>
-                        <WorkspaceScreen />
+                        <WorkspaceScreen selectedPlaylist={idNamePair} />
                 </Grid>
                 <Grid item xs={12}>
                     <EditToolbar/>
                 </Grid>
             </Grid>
-        arrow = <KeyboardDoubleArrowUpIcon />
+        arrow = <IconButton onClick={handleArrowUp}><KeyboardDoubleArrowUpIcon /></IconButton>
+    }
     }
 
     let cardElement =
@@ -116,7 +122,7 @@ function ListCard(props) {
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{display: 'flex', p: 1 , flexDirection: 'column'}}
-            style={{ width: '100%', fontSize: '48pt'}}
+            style={{ width: '100%', fontSize: '48pt', border: '2px solid black', marginBottom: '1%', padding: 0}}
             // button
             // onClick={(event) => {
             //     handleLoadList(event, idNamePair._id)
@@ -143,17 +149,20 @@ function ListCard(props) {
                     <IconButton><ThumbDownIcon/></IconButton>
                 </Grid>
                 
-                <Grid item xs={8}><Typography sx={{fontSize: 15}}>Published:</Typography></Grid>
-                <Grid item xs={4}><Typography>Listens:</Typography></Grid>
-                
                 {expandedListContent}
+                
+                <Grid item xs={7}><Typography sx={{fontSize: 15}}>Published:</Typography></Grid>
+                <Grid item xs={4}><Typography>Listens:</Typography></Grid>
+                <Grid item xs={1}><Typography>{arrow}</Typography></Grid>
+                
+                
 
-                <Grid item xs={11}></Grid>
+                {/* <Grid item xs={11}></Grid>
                 <Grid item xs={1} >
                     <Typography>
-                        <IconButton onClick={handleToggleDropDown}>{arrow}</IconButton>
+                        {arrow}
                     </Typography>
-                </Grid>
+                </Grid> */}
             </Grid>
         </ListItem>
 

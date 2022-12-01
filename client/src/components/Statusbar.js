@@ -3,7 +3,7 @@ import { GlobalStoreContext } from '../store'
 import { IconButton, Typography } from '@mui/material'
 import AuthContext from '../auth';
 import AddIcon from '@mui/icons-material/Add';
-
+import Box from '@mui/material/Box';
 /*
     Our Status bar React component goes at the bottom of our UI.
     
@@ -17,17 +17,21 @@ function Statusbar() {
         store.createNewList();
     }
 
-    let text ="Add List";
+    let text = 
+        <Box>
+            <IconButton onClick={handleCreateNewList}>
+                <AddIcon />
+            </IconButton>
+            Add List
+        </Box>
     if (store.currentList && auth.loggedIn)
-        text = store.currentList.name;
+        text = store.currentList.name
+     
     
     return (
         <div id="playlister-statusbar">
             {/* <Typography variant="h4">{text}</Typography> */}
-            <IconButton onClick={handleCreateNewList}>
-                <AddIcon />
-            </IconButton>
-            Add New Playlist
+            {text}
         </div>
     );
 }

@@ -6,6 +6,7 @@ import MUIRemoveSongModal from './MUIRemoveSongModal'
 import MUIEditSongModal from './MUIEditSongModal'
 import AppToolbar from './AppToolbar'
 import Statusbar from './Statusbar';
+import WorkspaceScreen from './WorkspaceScreen'
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
@@ -33,7 +34,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard = 
-            <List sx={{ width: '90%', left: '5%', bgcolor: 'background.paper' }} disablePadding>
+            <List sx={{ width: '90%', left: '5%'}} disablePadding>
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
@@ -45,6 +46,10 @@ const HomeScreen = () => {
             }
             </List>;
     }
+
+    // if (store.currentList !== null){
+    //     listCard = <WorkspaceScreen />
+    // }
 
     let modalJSX = "";
     if (store.isEditSongModalOpen()) {

@@ -36,7 +36,9 @@ function EditToolbar() {
     function handleClose() {
         store.closeCurrentList();
     }
-
+    function handlePublish() {
+        store.publishPlaylist()
+    }
     
     return (
         <div id="edit-toolbar">
@@ -77,13 +79,14 @@ function EditToolbar() {
                         <CloseIcon />
                     </Button> */}
                 </Grid>
-                {/* <Grid item xs={2}></Grid> */}
+                {/* <Grid item xs={}></Grid> */}
                 <Grid item xs={6}>
                     <Button
                         id='publish-playlist-button'
                         variant='contained'
                         startIcon={<PublishIcon/>}
-                        style={editToolbarButtonStyle}>
+                        style={editToolbarButtonStyle}
+                        onClick={handlePublish}>
                             Publish
                     </Button>
                     <Button
