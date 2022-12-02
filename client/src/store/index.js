@@ -349,8 +349,8 @@ function GlobalStoreContextProvider(props) {
         switch(sortType){
             case "name": {
                 store.idNamePairs.sort(function(a, b){
-                    if(a.name < b.name) { return -1; }
-                    if(a.name > b.name) { return 1; }
+                    if(a.name.toLowerCase() < b.name.toLowerCase()) { return -1; }
+                    if(a.name.toLowerCase() > b.name.toLowerCase()) { return 1; }
                     return 0;
                 })
             }
@@ -443,7 +443,7 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 let playlist = response.data.playlist;
 
-                response = await api.updatePlaylistById(playlist._id, playlist);
+                // response = await api.updatePlaylistById(playlist._id, playlist);
                 if (response.data.success) {
                     storeReducer({
                         type: GlobalStoreActionType.SET_CURRENT_LIST,

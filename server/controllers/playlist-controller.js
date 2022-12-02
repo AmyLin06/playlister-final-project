@@ -99,7 +99,8 @@ getPlaylistById = async (req, res) => {
             await User.findOne({ email: list.ownerEmail }, (err, user) => {
                 console.log("user._id: " + user._id);
                 console.log("req.userId: " + req.userId);
-                if (user._id == req.userId) {
+                // console.log("backend publish testtttttt", list.publishedDate !== undefined)
+                if (user._id == req.userId || (list.publishedDate !== undefined))  {
                     console.log("correct user!");
                     return res.status(200).json({ success: true, playlist: list })
                 }

@@ -41,12 +41,25 @@ function SongCard(props) {
     }
     function handleClick(event) {
         // DOUBLE CLICK IS FOR SONG EDITING
-        if (event.detail === 2) {
+        if (event.detail === 2 && store.currentList.publishedDate == undefined) {
             store.showEditSongModal(index, song);
         }
     }
 
     let cardClass = "list-card unselected-list-card";
+    let songDraggable = "";
+    let songDeleteButton = "";
+    if(store.currentList.publishedDate == undefined){
+        songDraggable = "true";
+        songDeleteButton = 
+            <IconButton
+                id={"remove-song-" + index}
+                onClick={handleRemoveSong}
+                className="list-card-button">
+                <ClearIcon/>
+            </IconButton>
+    }
+    
     return (
         <div
             key={index}
@@ -57,7 +70,8 @@ function SongCard(props) {
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            draggable="true"
+            // draggable="true"
+            draggable={songDraggable}
             onClick={handleClick}
         >
             {index + 1}.
@@ -74,12 +88,13 @@ function SongCard(props) {
                 value={"\u2715"}
                 onClick={handleRemoveSong}
             /> */}
-            <IconButton
+            {/* <IconButton
                 id={"remove-song-" + index}
                 onClick={handleRemoveSong}
                 className="list-card-button">
                 <ClearIcon/>
-            </IconButton>
+            </IconButton> */}
+            {songDeleteButton}
         </div>
     );
 }
