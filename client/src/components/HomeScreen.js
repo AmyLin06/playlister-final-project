@@ -7,6 +7,7 @@ import MUIEditSongModal from './MUIEditSongModal'
 import AppToolbar from './AppToolbar'
 import Statusbar from './Statusbar';
 import WorkspaceScreen from './WorkspaceScreen'
+import YouTube from 'react-youtube';
 
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab'
@@ -15,6 +16,8 @@ import Typography from '@mui/material/Typography'
 import { Grid } from '@mui/material';
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
+import { TabsContext } from '@mui/base'
+import Box from '@mui/material/Box'
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -76,9 +79,10 @@ const HomeScreen = () => {
                     <Grid item xs={4}>
                         SPACE FOR YOUTUBE
                         {/* <Tabs>
-                            <Tab label="Player"/>
-                            <Tab label="Comment"/>
+                            <Tab value="player" label="Player"/>
+                            <Tab value="comment" label="Comment"/>
                         </Tabs> */}
+                        <YouTube/>     
                     </Grid>
                 </Grid>
                 {modalJSX}

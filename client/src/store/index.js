@@ -328,9 +328,9 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 let pairsArray = response.data.data;
                 if(searchScreen == 'playlistNameSearchScreen'){
-                    pairsArray = pairsArray.filter(pair => pair.name.includes(searchInput));
+                    pairsArray = pairsArray.filter(pair => pair.name.includes(searchInput)).filter(pair => pair.publishedDate !== undefined);
                 }else if(searchScreen == 'usernameSearchScreen'){
-                    pairsArray = pairsArray.filter(pair => pair.ownerUsername.includes(searchInput));
+                    pairsArray = pairsArray.filter(pair => pair.ownerUsername.includes(searchInput)).filter(pair => pair.publishedDate !== undefined);
                 }
                 console.log(pairsArray);
                 storeReducer({
