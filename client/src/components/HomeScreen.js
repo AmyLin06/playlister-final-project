@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { GlobalStoreContext } from '../store'
 import ListCard from './ListCard.js'
 import MUIDeleteModal from './MUIDeleteModal'
@@ -16,8 +16,10 @@ import Typography from '@mui/material/Typography'
 import { Grid } from '@mui/material';
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import { TabsContext } from '@mui/base'
+import TabContext from '@mui/lab/TabContext';
 import Box from '@mui/material/Box'
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -26,6 +28,7 @@ import Box from '@mui/material/Box'
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
+    const [tabValue, setTabValue] = useState('player');
 
     useEffect(() => {
         store.loadIdNamePairs();
@@ -34,6 +37,10 @@ const HomeScreen = () => {
     function handleCreateNewList() {
         store.createNewList();
     }
+    function handleTabChange(event, newValue) {
+        setTabValue(newValue);
+    }
+
     let listCard = "";
     if (store) {
         listCard = 
@@ -76,13 +83,17 @@ const HomeScreen = () => {
                     <Grid item xs={8} id="list-selector-list">
                         {listCard}                 
                     </Grid>
-                    <Grid item xs={4}>
-                        SPACE FOR YOUTUBE
-                        {/* <Tabs>
-                            <Tab value="player" label="Player"/>
-                            <Tab value="comment" label="Comment"/>
-                        </Tabs> */}
-                        <YouTube/>     
+                    <Grid item xs={4}>     
+                        <TabContext value={tabValue}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <TabList onChange={handleTabChange}>
+                                    <Tab label="Player" value="player" />
+                                    <Tab label="Comment" value="comment" />
+                                </TabList>
+                            </Box>
+                            <TabPanel value="player"><YouTube/></TabPanel>
+                            <TabPanel value="comment">Comment</TabPanel>
+                        </TabContext>
                     </Grid>
                 </Grid>
                 {modalJSX}

@@ -619,6 +619,42 @@ function GlobalStoreContextProvider(props) {
         asyncPublishPlaylist();
     }
 
+    store.likePlaylist = function(idNamePair) {
+        async function asyncLikePlaylist(idNamePair) {
+            let response = await api.getPlaylistById(idNamePair._id);
+            if(response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.likes = playlist.likes + 1;
+                async function asyncUpdateList(playlist) {
+                    response = await api.updatePublishedPlaylistById(playlist._id, playlist);
+                    if(response.data.success){
+                        store.loadIdNamePairs();
+                    }
+                }
+                asyncUpdateList(playlist);
+            }
+        }
+        asyncLikePlaylist(idNamePair);
+    }
+
+    store.dislikePlaylist = function(idNamePair){
+        async function asyncDislikePlaylist(idNamePair) {
+            let response = await api.getPlaylistById(idNamePair._id);
+            if(response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.dislikes = playlist.dislikes + 1;
+                async function asyncUpdateList(playlist) {
+                    response = await api.updatePublishedPlaylistById(playlist._id, playlist);
+                    if(response.data.success){
+                        store.loadIdNamePairs();
+                    }
+                }
+                asyncUpdateList(playlist);
+            }
+        }
+        asyncDislikePlaylist(idNamePair);
+    }
+
     return (
         <GlobalStoreContext.Provider value={{
             store

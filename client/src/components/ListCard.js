@@ -91,6 +91,13 @@ function ListCard(props) {
         setText(event.target.value);
     }
 
+    function handleLikePlaylist() {
+        store.likePlaylist(idNamePair);
+    }
+    function handleDislikePlaylist() {
+        store.dislikePlaylist(idNamePair);
+    }
+
     let selectClass = "unselected-list-card";
     if (selected) {
         selectClass = "selected-list-card";
@@ -119,6 +126,22 @@ function ListCard(props) {
         }
     }
 
+    let likes = "";
+    let dislikes="";
+    let publishedDate="";
+    let listens="";
+    let editIcon = 
+        <IconButton onClick={handleToggleEdit} aria-label='edit'>
+            <EditIcon style={{fontSize:'20pt'}} />
+        </IconButton>
+    if(idNamePair.publishedDate !== undefined){
+        likes = <IconButton onClick={handleLikePlaylist}><ThumbUpIcon/>{idNamePair.likes}</IconButton>
+        dislikes = <IconButton onClick={handleDislikePlaylist}><ThumbDownIcon/>{idNamePair.dislikes}</IconButton>
+        publishedDate = <Typography sx={{fontSize: 15}}>Published: {idNamePair.publishedDate}</Typography>
+        listens = <Typography>Listens:</Typography>
+        editIcon = "";
+    }
+
     let cardElement =
         <ListItem
             id={idNamePair._id}
@@ -134,9 +157,7 @@ function ListCard(props) {
                 <Grid item xs={7}>
                     <Box sx={{ p: 1, flexGrow: 1, fontSize: 30, padding: 0}}>
                         <Typography sx={{fontSize: 30, display: 'inline', overflowWrap: 'break-word'}}>{idNamePair.name}</Typography>
-                        <IconButton onClick={handleToggleEdit} aria-label='edit'>
-                            <EditIcon style={{fontSize:'20pt'}} />
-                        </IconButton>
+                        {editIcon}
                         <IconButton onClick={(event) => {
                                 handleDeleteList(event, idNamePair._id)
                             }} aria-label='delete'>
@@ -147,14 +168,14 @@ function ListCard(props) {
                 </Grid>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={4}>
-                    <IconButton><ThumbUpIcon/></IconButton>
-                    <IconButton><ThumbDownIcon/></IconButton>
+                    {likes}
+                    {dislikes}
                 </Grid>
                 
                 {expandedListContent}
 
-                <Grid item xs={7}><Typography sx={{fontSize: 15}}>Published: {idNamePair.publishedDate}</Typography></Grid>
-                <Grid item xs={4}><Typography>Listens:</Typography></Grid>
+                <Grid item xs={7}>{publishedDate}</Grid>
+                <Grid item xs={4}>{listens}</Grid>
                 <Grid item xs={1}><Typography>{arrow}</Typography></Grid>
                 
                 

@@ -30,10 +30,10 @@ function AppToolbar() {
     }
   
     const handleSwitchScreen = (screen) => {
-        setSearchScreen(screen);
         if(screen == 'homeScreen'){
             store.loadIdNamePairs();
         }
+        setSearchScreen(screen);
     }
     const handleKeyPress = (event) => {
         if (event.code === "Enter" && (searchScreen !== "homeScreen")) {
