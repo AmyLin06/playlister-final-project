@@ -39,7 +39,10 @@ function EditToolbar() {
     function handlePublish() {
         store.publishPlaylist()
     }
-    
+    function handleDuplicate() {
+        store.duplicatePlaylist();
+    }
+
     if(store.currentList !== null && store.currentList.publishedDate !== undefined){
         return(
             <div id="edit-toolbar">
@@ -47,7 +50,8 @@ function EditToolbar() {
                     id='duplicate-playlist-button'
                     variant='contained'
                     startIcon={<ContentCopyIcon/>}
-                    style={editToolbarButtonStyle}>
+                    style={editToolbarButtonStyle}
+                    onClick={handleDuplicate}>
                         Duplicate
                 </Button>
             </div>
@@ -114,7 +118,8 @@ function EditToolbar() {
                         id='duplicate-playlist-button'
                         variant='contained'
                         startIcon={<ContentCopyIcon/>}
-                        style={editToolbarButtonStyle}>
+                        style={editToolbarButtonStyle}
+                        onClick={handleDuplicate}>
                             Duplicate
                     </Button>
                 </Grid>

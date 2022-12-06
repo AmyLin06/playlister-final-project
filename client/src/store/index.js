@@ -646,6 +646,10 @@ function GlobalStoreContextProvider(props) {
                     response = await api.updatePublishedPlaylistById(playlist._id, playlist);
                     if(response.data.success){
                         store.loadIdNamePairs();
+                        // storeReducer({
+                        //     type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                        //     payload: r
+                        // });
                     }
                 }
                 asyncUpdateList(playlist);
@@ -691,6 +695,28 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncCommentPlaylist(userComment);
+    }
+
+    store.duplicatePlaylist = async function(){
+        let duplicateListName = store.currentList.name;
+        const response = await api.createPlaylist(duplicateListName, store.currentList.songs, auth.user.username, auth.user.email);
+        console.log("createDuplicateList response: " + response);
+        if (response.status === 201) {
+            tps.clearAllTransactions();
+            let newDupList = response.data.playlist;
+            storeReducer({
+                type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                payload: store.idNamePairs
+            }
+            );
+            alert("Dupliate successful! Refresh the page to see your new playlist.");
+            // IF IT'S A VALID LIST THEN LET'S START EDITING IT
+            // history.push("/playlist/" + newList._id);
+            // store.loadIdNamePairs();
+        }
+        else {
+            console.log("API FAILED TO CREATE A NEW LIST");
+        }
     }
 
     store.clearIdNamePairs = function(){

@@ -254,7 +254,7 @@ updatePublishedPlaylist = async (req, res) => {
         playlist.likes = body.playlist.likes;
         playlist.dislikes = body.playlist.dislikes;
         playlist.comments = body.playlist.comments;
-        
+
         playlist
             .save()
             .then(() => {
@@ -262,7 +262,7 @@ updatePublishedPlaylist = async (req, res) => {
                 return res.status(200).json({
                     success: true,
                     id: playlist._id,
-                    message: 'Playlist likes/dislikes updated!',
+                    message: 'Playlist likes/dislikes updated!'
                 })
             })
             .catch(error => {
