@@ -32,6 +32,8 @@ function AppToolbar() {
     const handleSwitchScreen = (screen) => {
         if(screen == 'homeScreen'){
             store.loadIdNamePairs();
+        }else {
+            store.clearIdNamePairs();
         }
         setSearchScreen(screen);
     }
@@ -50,8 +52,8 @@ function AppToolbar() {
             <MenuItem onClick={(event) => {handlePlaylistSort(event, "name")}}>Name (A-Z)</MenuItem>
             <MenuItem>Publish Date (Newest)</MenuItem>
             <MenuItem>Listens (High - Low)</MenuItem>
-            <MenuItem>Likes (High - Low)</MenuItem>
-            <MenuItem>Dislikes (High - Low)</MenuItem>
+            <MenuItem onClick={(event) => {handlePlaylistSort(event, "likes")}}>Likes (High - Low)</MenuItem>
+            <MenuItem onClick={(event) => {handlePlaylistSort(event, "dislikes")}}>Dislikes (High - Low)</MenuItem>
         </Menu>
 
     let HomeIconHighlight = {};

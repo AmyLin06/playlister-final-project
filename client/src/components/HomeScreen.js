@@ -20,6 +20,8 @@ import TabContext from '@mui/lab/TabContext';
 import Box from '@mui/material/Box'
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
+import YouTubePlayerExample from './PlaylisterYouTubePlayer'
+import ListComment from './PlaylisterComment'
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -44,7 +46,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard = 
-            <List sx={{ width: '90%', left: '5%'}} disablePadding>
+            <List sx={{ width: '96%', left: '2%'}} disablePadding>
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
@@ -80,10 +82,10 @@ const HomeScreen = () => {
                     {/* <Grid item xs={12} id="app-toolbar">
                         <AppToolbar />
                     </Grid> */}
-                    <Grid item xs={8} id="list-selector-list">
+                    <Grid item xs={7} id="list-selector-list">
                         {listCard}                 
                     </Grid>
-                    <Grid item xs={4}>     
+                    <Grid item xs={5}>     
                         <TabContext value={tabValue}>
                             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                 <TabList onChange={handleTabChange}>
@@ -91,8 +93,8 @@ const HomeScreen = () => {
                                     <Tab label="Comment" value="comment" />
                                 </TabList>
                             </Box>
-                            <TabPanel value="player"><YouTube/></TabPanel>
-                            <TabPanel value="comment">Comment</TabPanel>
+                            <TabPanel value="player" style={{padding: 0}}><YouTubePlayerExample/></TabPanel>
+                            <TabPanel value="comment" style={{padding: 0, height: '90%'}}><ListComment/></TabPanel>
                         </TabContext>
                     </Grid>
                 </Grid>

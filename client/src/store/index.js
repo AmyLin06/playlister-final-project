@@ -353,7 +353,26 @@ function GlobalStoreContextProvider(props) {
                     if(a.name.toLowerCase() > b.name.toLowerCase()) { return 1; }
                     return 0;
                 })
+                break;
             }
+            case "likes": {
+                store.idNamePairs.sort(function(a, b){
+                    if(a.likes < b.likes){return 1;}
+                    if(a.likes > b.likes){return -1;}
+                    return 0;
+                })
+                break;
+            }
+            case "dislikes": {
+                store.idNamePairs.sort(function(a, b){
+                    if(a.dislikes < b.dislikes){return 1;}
+                    if(a.dislikes > b.dislikes){return -1;}
+                    return 0;
+                })
+                break;
+            }
+            default:
+                break;
         }
         storeReducer({
             type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
@@ -604,8 +623,6 @@ function GlobalStoreContextProvider(props) {
             if(response.data.success) {
                 let playlist = response.data.playlist;
                 const date = new Date().toJSON().slice(0, 10);
-                // let dateYear = date.getFullYear();
-                // console.log("TESTTTTTTTTT", typeof date)
                 playlist.publishedDate = date;
                 async function asyncUpdateList(playlist) {
                     response = await api.updatePlaylistById(playlist._id, playlist);
@@ -653,6 +670,34 @@ function GlobalStoreContextProvider(props) {
             }
         }
         asyncDislikePlaylist(idNamePair);
+    }
+
+    store.updateListComment = function(userComment){
+        async function asyncCommentPlaylist(userComment) {
+            let response = await api.getPlaylistById(store.currentList._id);
+            if(response.data.success) {
+                let playlist = response.data.playlist;
+                playlist.comments.push(userComment);
+                async function asyncUpdateList(playlist) {
+                    response = await api.updatePublishedPlaylistById(playlist._id, playlist);
+                    if(response.data.success) {
+                        storeReducer({
+                            type: GlobalStoreActionType.SET_CURRENT_LIST,
+                            payload: playlist
+                        });
+                    }
+                }
+                asyncUpdateList(playlist);
+            }
+        }
+        asyncCommentPlaylist(userComment);
+    }
+
+    store.clearIdNamePairs = function(){
+        storeReducer({
+            type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+            payload: []
+        });
     }
 
     return (

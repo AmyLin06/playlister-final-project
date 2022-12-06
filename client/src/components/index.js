@@ -13,6 +13,8 @@ import SplashScreen from './SplashScreen'
 import Statusbar from './Statusbar'
 import WorkspaceScreen from './WorkspaceScreen'
 import MUIErrorAlert from './MUIErrorAlert'
+import YouTubePlayerExample from './PlaylisterYouTubePlayer'
+import ListComment from './PlaylisterComment'
 
 /*
     This serves as a module so that we can import
@@ -35,4 +37,6 @@ export {
     SplashScreen,
     Statusbar, 
     WorkspaceScreen,
-    MUIErrorAlert}
+    MUIErrorAlert,
+    YouTubePlayerExample,
+    ListComment}

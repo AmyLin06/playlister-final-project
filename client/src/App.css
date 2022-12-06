@@ -73,6 +73,11 @@ body {
   vertical-align: center;
 }
 
+iframe{
+  position: relative;
+  width: 100%;
+}
+
 #home-screen{
   position: absolute;
   width: 100%;
