@@ -93,7 +93,7 @@ const HomeScreen = () => {
                                     <Tab label="Comment" value="comment" />
                                 </TabList>
                             </Box>
-                            <TabPanel value="player" style={{padding: 0}}><YouTubePlayerExample/></TabPanel>
+                            <TabPanel value="player" style={{padding: 0, height: '90%'}}><YouTubePlayerExample/></TabPanel>
                             <TabPanel value="comment" style={{padding: 0, height: '90%'}}><ListComment/></TabPanel>
                         </TabContext>
                     </Grid>

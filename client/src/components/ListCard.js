@@ -61,6 +61,9 @@ function ListCard(props) {
         // let newActive = !dropDownActive;
         // if(newActive) {
             handleLoadList(event, idNamePair._id);
+            // if(store.currentList !== null && store.currentList.publishedDate !== undefined){
+            //     store.incPlaylistListens();
+            // }
         // }else{
         //     store.closeCurrentList();
         // }
@@ -138,7 +141,7 @@ function ListCard(props) {
         likes = <IconButton onClick={handleLikePlaylist}><ThumbUpIcon/>{idNamePair.likes}</IconButton>
         dislikes = <IconButton onClick={handleDislikePlaylist}><ThumbDownIcon/>{idNamePair.dislikes}</IconButton>
         publishedDate = <Typography sx={{fontSize: 15}}>Published: {idNamePair.publishedDate}</Typography>
-        listens = <Typography>Listens:</Typography>
+        listens = <Typography>Listens: {idNamePair.listens}</Typography>
         editIcon = "";
     }
 

@@ -22,8 +22,8 @@ const playlistSchema = new Schema(
         comments: {type: [{
             user: String,
             userComment: String
-        }]}
-
+        }]},
+        listens: {type: Number, default: 0}
     },
     { timestamps: true },
 )

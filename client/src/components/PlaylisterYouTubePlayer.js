@@ -1,21 +1,34 @@
 import React from 'react';
 import YouTube from 'react-youtube';
+import { useContext, useState } from 'react'
+import { GlobalStoreContext } from '../store'
+import { IconButton, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
+import FastForwardIcon from '@mui/icons-material/FastForward';
+import FastRewindIcon from '@mui/icons-material/FastRewind';
 
 export default function YouTubePlayerExample() {
+    const { store } = useContext(GlobalStoreContext);
+    const [currentSong, setCurrentSong] = useState(0);
+
     // THIS EXAMPLE DEMONSTRATES HOW TO DYNAMICALLY MAKE A
     // YOUTUBE PLAYER AND EMBED IT IN YOUR SITE. IT ALSO
     // DEMONSTRATES HOW TO IMPLEMENT A PLAYLIST THAT MOVES
     // FROM ONE SONG TO THE NEXT
 
     // THIS HAS THE YOUTUBE IDS FOR THE SONGS IN OUR PLAYLIST
-    let playlist = [
-        "mqmxkGjow1A",
-        "8RbXIMZmVv8",
-        "8UbNbor3OqQ"
-    ];
+    // let playlist = [
+    //     "mqmxkGjow1A",
+    //     "8RbXIMZmVv8",
+    //     "8UbNbor3OqQ"
+    // ];
+    
+    
 
     // THIS IS THE INDEX OF THE SONG CURRENTLY IN USE IN THE PLAYLIST
-    let currentSong = 0;
+    // let currentSong = store.currentYTSong;
 
     const playerOptions = {
         height: '390',
@@ -29,6 +42,10 @@ export default function YouTubePlayerExample() {
     // THIS FUNCTION LOADS THE CURRENT SONG INTO
     // THE PLAYER AND PLAYS IT
     function loadAndPlayCurrentSong(player) {
+        if((currentSong + 1) > playlist.length){
+            setCurrentSong(0);
+            console.log("reached here");
+        }
         let song = playlist[currentSong];
         player.loadVideoById(song);
         player.playVideo();
@@ -36,11 +53,18 @@ export default function YouTubePlayerExample() {
 
     // THIS FUNCTION INCREMENTS THE PLAYLIST SONG TO THE NEXT ONE
     function incSong() {
-        currentSong++;
-        currentSong = currentSong % playlist.length;
+        // currentSong++
+        // currentSong = currentSong % playlist.length;
+        // store.incYouTubeSongIndex(currentSong);
+        setCurrentSong((currentSong + 1) % playlist.length);
+    }
+    function decSong() {
+        setCurrentSong((currentSong - 1) % playlist.length)
     }
 
+    let player;
     function onPlayerReady(event) {
+        player = event.target;
         loadAndPlayCurrentSong(event.target);
         event.target.playVideo();
     }
@@ -75,9 +99,63 @@ export default function YouTubePlayerExample() {
         }
     }
 
-    return <YouTube
-        videoId={playlist[currentSong]}
-        opts={playerOptions}
-        onReady={onPlayerReady}
-        onStateChange={onPlayerStateChange} />;
+    function handlePrevButton () {
+        decSong();
+        player.playVideo();
+    }
+    function handlePauseButton () {
+        player.pauseVideo();
+    }
+    function handlePlayButton() {
+        player.playVideo();
+    }
+    function handleNextButton() {
+        incSong();
+        player.playVideo();
+    }
+
+    let playlist = [];
+    if(store.currentList !== null && store.currentList.publishedDate !== undefined){
+        playlist = store.currentList.songs.map((song) => (song.youTubeId));
+    }
+    
+    let playlistPlayingName = "";
+    let currentSongNum = "";
+    let currentSongTitle = "";
+    let currentSongArtist = "";
+    if(store.currentList !== null && store.currentList.publishedDate !== undefined && store.currentList.songs.length > 0){
+        if((currentSong + 1) > playlist.length){
+            setCurrentSong(0);
+            console.log("reached here");
+        }else{
+        playlistPlayingName = store.currentList.name;
+        currentSongNum = currentSong + 1;
+        currentSongTitle = store.currentList.songs[currentSong].title;
+        currentSongArtist = store.currentList.songs[currentSong].artist;
+        }
+    }
+
+    return (
+        <Box style={{height: '100%', position: 'relative'}}>
+            <YouTube
+                videoId={playlist[currentSong]}
+                opts={playerOptions}
+                onReady={onPlayerReady}
+                onStateChange={onPlayerStateChange} />
+            <div id = 'youtubePlayerInfoBox'>
+                <Typography>Now Playing</Typography>
+                <Typography>Playlist: {playlistPlayingName}</Typography>
+                <Typography>Song #: {currentSongNum}</Typography>
+                <Typography>Title: {currentSongTitle}</Typography>
+                <Typography>Artist: {currentSongArtist}</Typography>
+
+                <div>
+                    <IconButton onClick={handlePrevButton}><FastRewindIcon/></IconButton>
+                    <IconButton onClick={handlePauseButton}><StopIcon/></IconButton>
+                    <IconButton onClick={handlePlayButton}><PlayArrowIcon/></IconButton>
+                    <IconButton onClick={handleNextButton}><FastForwardIcon/></IconButton>
+                </div>
+            </div>
+        </Box> 
+    );
 }

@@ -27,6 +27,7 @@ function AppToolbar() {
 
     const handlePlaylistSort = (event, sortType) => {
         store.loadSortedPlaylist(sortType);
+        setAnchorEl(null);
     }
   
     const handleSwitchScreen = (screen) => {
@@ -50,8 +51,8 @@ function AppToolbar() {
             onClose={handleSortMenuClose}
         >
             <MenuItem onClick={(event) => {handlePlaylistSort(event, "name")}}>Name (A-Z)</MenuItem>
-            <MenuItem>Publish Date (Newest)</MenuItem>
-            <MenuItem>Listens (High - Low)</MenuItem>
+            <MenuItem onClick={(event) => {handlePlaylistSort(event, "publishDate")}}>Publish Date (Newest)</MenuItem>
+            <MenuItem onClick={(event) => {handlePlaylistSort(event, "listens")}}>Listens (High - Low)</MenuItem>
             <MenuItem onClick={(event) => {handlePlaylistSort(event, "likes")}}>Likes (High - Low)</MenuItem>
             <MenuItem onClick={(event) => {handlePlaylistSort(event, "dislikes")}}>Dislikes (High - Low)</MenuItem>
         </Menu>

@@ -22,7 +22,7 @@ function ListComment() {
         }
     }
 
-    let playlistComment = "";
+    let playlistComment = "No playlist selected.";
     if(store.currentList !== null){
         playlistComment = store.currentList.comments.map((comment, index) => (
             <div key={'playlist-comment-' + (index)} style={{border: '2px solid black', marginBottom: '1%'}}>

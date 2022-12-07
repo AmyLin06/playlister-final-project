@@ -143,7 +143,8 @@ getPlaylistPairs = async (req, res) => {
                             songs: list.songs,
                             publishedDate: list.publishedDate,
                             likes: list.likes,
-                            dislikes: list.dislikes
+                            dislikes: list.dislikes,
+                            listens: list.listens
                         };
                         pairs.push(pair);
                     }
@@ -254,6 +255,7 @@ updatePublishedPlaylist = async (req, res) => {
         playlist.likes = body.playlist.likes;
         playlist.dislikes = body.playlist.dislikes;
         playlist.comments = body.playlist.comments;
+        playlist.listens = body.playlist.listens;
 
         playlist
             .save()
@@ -262,7 +264,8 @@ updatePublishedPlaylist = async (req, res) => {
                 return res.status(200).json({
                     success: true,
                     id: playlist._id,
-                    message: 'Playlist likes/dislikes updated!'
+                    message: 'Playlist likes/dislikes updated!',
+                    playlist: playlist
                 })
             })
             .catch(error => {
