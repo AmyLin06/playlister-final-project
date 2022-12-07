@@ -60,8 +60,8 @@ function EditToolbar() {
 
     return (
         <div id="edit-toolbar">
-            <Grid container>
-                <Grid item xs={6}>
+            {/* <Grid container>
+                <Grid item xs={7}> */}
                     <Button
                         disabled={!store.canAddNewSong() || store.currentModal !== "NONE"}
                         id='add-song-button'
@@ -96,9 +96,9 @@ function EditToolbar() {
                     variant="contained">
                         <CloseIcon />
                     </Button> */}
-                </Grid>
+                {/* </Grid> */}
                 {/* <Grid item xs={}></Grid> */}
-                <Grid item xs={6}>
+                {/* <Grid item xs={5}> */}
                     <Button
                         id='publish-playlist-button'
                         variant='contained'
@@ -107,13 +107,13 @@ function EditToolbar() {
                         onClick={handlePublish}>
                             Publish
                     </Button>
-                    <Button
+                    {/* <Button
                         id='delete-playlist-button'
                         variant="contained"
                         startIcon={<DeleteIcon/>}
                         style={editToolbarButtonStyle}>
                             Delete
-                    </Button>
+                    </Button> */}
                     <Button
                         id='duplicate-playlist-button'
                         variant='contained'
@@ -122,8 +122,8 @@ function EditToolbar() {
                         onClick={handleDuplicate}>
                             Duplicate
                     </Button>
-                </Grid>
-            </Grid>
+                {/* </Grid> */}
+            {/* </Grid> */}
         </div>
     )
 }

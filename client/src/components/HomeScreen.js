@@ -40,6 +40,7 @@ const HomeScreen = () => {
         store.createNewList();
     }
     function handleTabChange(event, newValue) {
+        // event.stopPropagation();
         setTabValue(newValue);
     }
 

@@ -329,10 +329,12 @@ function GlobalStoreContextProvider(props) {
             const response = await api.getPlaylists();
             if (response.data.success) {
                 let pairsArray = response.data.data;
-                if(searchScreen == 'playlistNameSearchScreen'){
+                if(searchScreen == 'playlistNameSearchScreen' && (searchInput !== "")){
                     pairsArray = pairsArray.filter(pair => pair.name.includes(searchInput)).filter(pair => pair.publishedDate !== undefined);
-                }else if(searchScreen == 'usernameSearchScreen'){
+                }else if(searchScreen == 'usernameSearchScreen' && (searchInput !== "")){
                     pairsArray = pairsArray.filter(pair => pair.ownerUsername.includes(searchInput)).filter(pair => pair.publishedDate !== undefined);
+                }else if(searchInput == ""){
+                    pairsArray = [];
                 }
                 console.log(pairsArray);
                 storeReducer({
@@ -675,7 +677,19 @@ function GlobalStoreContextProvider(props) {
                 async function asyncUpdateList(playlist) {
                     response = await api.updatePublishedPlaylistById(playlist._id, playlist);
                     if(response.data.success){
-                        
+                        let newIdNamePair = {
+                            _id: idNamePair._id,
+                            name: idNamePair.name,
+                            ownerUsername: idNamePair.ownerUsername,
+                            songs: idNamePair.songs,
+                            publishedDate: idNamePair.publishedDate,
+                            likes: idNamePair.likes + 1,
+                            dislikes: idNamePair.dislikes,
+                            listens: idNamePair.listens
+                        }
+                        let index = store.idNamePairs.indexOf(idNamePair);
+                        store.idNamePairs.splice(index, 1, newIdNamePair);
+
                         // store.loadIdNamePairs();
                         storeReducer({
                             type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
@@ -698,7 +712,24 @@ function GlobalStoreContextProvider(props) {
                 async function asyncUpdateList(playlist) {
                     response = await api.updatePublishedPlaylistById(playlist._id, playlist);
                     if(response.data.success){
-                        store.loadIdNamePairs();
+                        // store.loadIdNamePairs();
+                        let newIdNamePair = {
+                            _id: idNamePair._id,
+                            name: idNamePair.name,
+                            ownerUsername: idNamePair.ownerUsername,
+                            songs: idNamePair.songs,
+                            publishedDate: idNamePair.publishedDate,
+                            likes: idNamePair.likes,
+                            dislikes: idNamePair.dislikes + 1,
+                            listens: idNamePair.listens
+                        }
+                        let index = store.idNamePairs.indexOf(idNamePair);
+                        store.idNamePairs.splice(index, 1, newIdNamePair);
+
+                        storeReducer({
+                            type: GlobalStoreActionType.LOAD_ID_NAME_PAIRS,
+                            payload: store.idNamePairs
+                        });
                     }
                 }
                 asyncUpdateList(playlist);
@@ -729,7 +760,7 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.duplicatePlaylist = async function(){
-        let duplicateListName = store.currentList.name;
+        let duplicateListName = store.currentList.name + "1";
         const response = await api.createPlaylist(duplicateListName, store.currentList.songs, auth.user.username, auth.user.email);
         console.log("createDuplicateList response: " + response);
         if (response.status === 201) {
@@ -756,13 +787,6 @@ function GlobalStoreContextProvider(props) {
             payload: []
         });
     }
-
-    // store.incYouTubeSongIndex = function (songIndex){
-    //     storeReducer({
-    //         type: GlobalStoreActionType.INC_YTSONG_INDEX,
-    //         payload: songIndex
-    //     });
-    // }
 
 
     return (
