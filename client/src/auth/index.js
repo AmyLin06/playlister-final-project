@@ -131,6 +131,22 @@ function AuthContextProvider(props) {
         };
     }
 
+    auth.guestLogin = function () {
+        authReducer({
+            type: AuthActionType.LOGIN_USER,
+            payload: {
+                user: {
+                    firstName: "guest",
+                    lastName: "guest",
+                    email: "guest",
+                    username: "guest"
+                }
+            }
+        })
+        history.push("/");
+        // store.loadIdNamePairs();
+    }
+
     auth.logoutUser = async function() {
         const response = await api.logoutUser();
         if (response.status === 200) {

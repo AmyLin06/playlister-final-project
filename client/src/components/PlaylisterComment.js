@@ -29,8 +29,8 @@ function ListComment() {
     let playlistComment = "No playlist selected.";
     if(store.currentList !== null){
         playlistComment = store.currentList.comments.map((comment, index) => (
-            <div key={'playlist-comment-' + (index)} style={{border: '2px solid black', marginBottom: '1%'}}>
-                <Typography onClick={(event) => {handleUsernameSearch(comment.user)}}>{comment.user}</Typography>
+            <div key={'playlist-comment-' + (index)} style={{border: '2px solid black', marginBottom: '1%', background: 'lightblue'}}>
+                <Typography sx={{color: "darkblue"}} onClick={(event) => {handleUsernameSearch(comment.user)}}>{comment.user}</Typography>
                 <Typography sx={{overflowWrap: 'break-word'}}>{comment.userComment}</Typography>
             </div>
         ))

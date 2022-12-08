@@ -22,6 +22,7 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import YouTubePlayerExample from './PlaylisterYouTubePlayer'
 import ListComment from './PlaylisterComment'
+import AuthContext from '../auth'
 
 /*
     This React component lists all the top5 lists in the UI.
@@ -30,10 +31,13 @@ import ListComment from './PlaylisterComment'
 */
 const HomeScreen = () => {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [tabValue, setTabValue] = useState('player');
 
     useEffect(() => {
-        store.loadIdNamePairs();
+        if(auth.user.email !== "guest"){
+            store.loadIdNamePairs();
+        }
     }, []);
 
     function handleCreateNewList() {

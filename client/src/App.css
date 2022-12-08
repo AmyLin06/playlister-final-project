@@ -60,12 +60,12 @@ body {
 #splash-screen {
   background-image: linear-gradient(to bottom, #b8b808, #636723);
   color: white;
-  font-size: 5vw;
+  font-size: 3vw;
   border-color: black;
   border-width: 2px;
   border-style: solid;
   border-radius: 10px;
-  padding-left: 10%;
+  padding-left: 5%;
   padding-top: 5%;
   padding-bottom: 5%;
   height:70%;

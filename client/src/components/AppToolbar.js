@@ -10,9 +10,11 @@ import Menu from "@mui/material/Menu";
 import Grid from "@mui/material/Grid";
 import GlobalStoreContext from "../store";
 import { useHistory, useParams } from "react-router-dom";
+import AuthContext from '../auth'
 
 function AppToolbar() {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = useState(null);
     const isSortMenuOpen = Boolean(anchorEl);
     const [searchScreen, setSearchScreen] = useState("homeScreen");
@@ -69,14 +71,23 @@ function AppToolbar() {
         PersonIconHighlight = {color: 'white'};
     }
 
+    let homeIcon = 
+        <IconButton sx={HomeIconHighlight} onClick={(event) => {handleSwitchScreen("homeScreen")}}>
+            <HomeIcon />
+        </IconButton>
+    if(auth.user.email == "guest" && auth.user.username == "guest" && auth.user.firstName == "guest" && auth.user.lastName == "guest"){
+        homeIcon = "";
+    }
+    
     return(
         <div id="app-toolbar">
             <Toolbar>
                 <Grid container>
                     <Grid item xs={3}>
-                        <IconButton sx={HomeIconHighlight} onClick={(event) => {handleSwitchScreen("homeScreen")}}>
+                        {/* <IconButton sx={HomeIconHighlight} onClick={(event) => {handleSwitchScreen("homeScreen")}}>
                             <HomeIcon />
-                        </IconButton>
+                        </IconButton> */}
+                        {homeIcon}
                         <IconButton sx={GroupsIconHighlight} onClick={(event) => {handleSwitchScreen("playlistNameSearchScreen")}}>
                             <GroupsIcon />
                         </IconButton>
