@@ -59,7 +59,7 @@ export default function YouTubePlayerExample() {
         setCurrentSong((currentSong + 1) % playlist.length);
     }
     function decSong() {
-        setCurrentSong((currentSong - 1) % playlist.length)
+        setCurrentSong(Math.abs((currentSong - 1)) % playlist.length)
     }
 
     let player;
@@ -143,18 +143,18 @@ export default function YouTubePlayerExample() {
                 onReady={onPlayerReady}
                 onStateChange={onPlayerStateChange} />
             <div id = 'youtubePlayerInfoBox'>
-                <Typography>Now Playing</Typography>
+                <Typography style={{textAlign: "center"}}>Now Playing</Typography>
                 <Typography>Playlist: {playlistPlayingName}</Typography>
                 <Typography>Song #: {currentSongNum}</Typography>
                 <Typography>Title: {currentSongTitle}</Typography>
                 <Typography>Artist: {currentSongArtist}</Typography>
 
-                <div>
+                <Box style={{textAlign: "center"}}>
                     <IconButton onClick={handlePrevButton}><FastRewindIcon/></IconButton>
                     <IconButton onClick={handlePauseButton}><StopIcon/></IconButton>
                     <IconButton onClick={handlePlayButton}><PlayArrowIcon/></IconButton>
                     <IconButton onClick={handleNextButton}><FastForwardIcon/></IconButton>
-                </div>
+                </Box>
             </div>
         </Box> 
     );

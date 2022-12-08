@@ -59,7 +59,6 @@ function GlobalStoreContextProvider(props) {
         listNameActive: false,
         listIdMarkedForDeletion: null,
         listMarkedForDeletion: null,
-        currentYTSong: 0
     });
 
     const history = useHistory();
@@ -283,7 +282,7 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION CREATES A NEW LIST
     store.createNewList = async function () {
-        let newListName = "Untitled" + store.newListCounter;
+        let newListName = "Untitled" + (store.idNamePairs.length + 1);
         const response = await api.createPlaylist(newListName, [], auth.user.username, auth.user.email);
         console.log("createNewList response: " + response);
         if (response.status === 201) {
@@ -330,9 +329,9 @@ function GlobalStoreContextProvider(props) {
             if (response.data.success) {
                 let pairsArray = response.data.data;
                 if(searchScreen == 'playlistNameSearchScreen' && (searchInput !== "")){
-                    pairsArray = pairsArray.filter(pair => pair.name.includes(searchInput)).filter(pair => pair.publishedDate !== undefined);
+                    pairsArray = pairsArray.filter(pair => pair.name.toLowerCase().includes(searchInput.toLowerCase())).filter(pair => pair.publishedDate !== undefined);
                 }else if(searchScreen == 'usernameSearchScreen' && (searchInput !== "")){
-                    pairsArray = pairsArray.filter(pair => pair.ownerUsername.includes(searchInput)).filter(pair => pair.publishedDate !== undefined);
+                    pairsArray = pairsArray.filter(pair => pair.ownerUsername.toLowerCase().includes(searchInput.toLowerCase())).filter(pair => pair.publishedDate !== undefined);
                 }else if(searchInput == ""){
                     pairsArray = [];
                 }
@@ -481,6 +480,7 @@ function GlobalStoreContextProvider(props) {
             let response = await api.getPlaylistById(id);
             if (response.data.success) {
                 let playlist = response.data.playlist;
+                // let playlistIndex = store.idNamePairs.indexOf(playlist);;
                 if(playlist.publishedDate !== undefined){
                     playlist.listens = playlist.listens + 1;
                 }
@@ -495,6 +495,9 @@ function GlobalStoreContextProvider(props) {
                 async function asyncUpdateList(playlist) {
                     response = await api.updatePublishedPlaylistById(playlist._id, playlist);
                     if(response.data.success) {
+
+                        // store.idNamePairs.splice(playlistIndex, 1, playlist);
+                        
                         storeReducer({
                             type: GlobalStoreActionType.SET_CURRENT_LIST,
                             payload: response.data.playlist

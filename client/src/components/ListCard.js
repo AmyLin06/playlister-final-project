@@ -11,9 +11,10 @@ import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
-import { Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import AuthContext from '../auth'
 
 /*
     This is a card in our list of top 5 lists. It lets select
@@ -24,6 +25,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 */
 function ListCard(props) {
     const { store } = useContext(GlobalStoreContext);
+    const { auth } = useContext(AuthContext);
     const [editActive, setEditActive] = useState(false);
     const [text, setText] = useState("");
     // const [dropDownActive, setDropDownActive] = useState(false);
@@ -101,6 +103,10 @@ function ListCard(props) {
         store.dislikePlaylist(idNamePair);
     }
 
+    function handleUsernameSearch() {
+        store.loadSearchResults("usernameSearchScreen", idNamePair.ownerUsername);
+    }
+
     let selectClass = "unselected-list-card";
     if (selected) {
         selectClass = "selected-list-card";
@@ -137,12 +143,23 @@ function ListCard(props) {
         <IconButton onClick={handleToggleEdit} aria-label='edit'>
             <EditIcon style={{fontSize:'20pt'}} />
         </IconButton>
+    let publishedListColorStyle="white";
+    
     if(idNamePair.publishedDate !== undefined){
         likes = <IconButton onClick={handleLikePlaylist}><ThumbUpIcon/>{idNamePair.likes}</IconButton>
         dislikes = <IconButton onClick={handleDislikePlaylist}><ThumbDownIcon/>{idNamePair.dislikes}</IconButton>
         publishedDate = <Typography sx={{fontSize: 15}}>Published: {idNamePair.publishedDate}</Typography>
         listens = <Typography>Listens: {idNamePair.listens}</Typography>
         editIcon = "";
+        publishedListColorStyle = "lightblue";
+    }
+
+    let deleteIcon = 
+        <IconButton onClick={(event) => {handleDeleteList(event, idNamePair._id)}} aria-label='delete'>
+            <DeleteIcon style={{fontSize:'20pt'}} />
+        </IconButton>
+    if(auth.user.username !== idNamePair.ownerUsername){
+        deleteIcon = "";
     }
 
     let cardElement =
@@ -150,7 +167,7 @@ function ListCard(props) {
             id={idNamePair._id}
             key={idNamePair._id}
             sx={{display: 'flex', p: 1 , flexDirection: 'column'}}
-            style={{ width: '100%', fontSize: '48pt', border: '2px solid black', marginBottom: '1%', padding: 0}}
+            style={{ width: '100%', fontSize: '48pt', border: '2px solid black', marginBottom: '1%', padding: 0, background: publishedListColorStyle }}
             // button
             // onClick={(event) => {
             //     handleLoadList(event, idNamePair._id)
@@ -161,13 +178,9 @@ function ListCard(props) {
                     <Box sx={{ p: 1, flexGrow: 1, fontSize: 30, padding: 0}}>
                         <Typography sx={{fontSize: 30, display: 'inline', overflowWrap: 'break-word'}}>{idNamePair.name}</Typography>
                         {editIcon}
-                        <IconButton onClick={(event) => {
-                                handleDeleteList(event, idNamePair._id)
-                            }} aria-label='delete'>
-                            <DeleteIcon style={{fontSize:'20pt'}} />
-                        </IconButton>
+                        {deleteIcon}
                     </Box>  
-                    <Typography sx={{fontSize: 15}}>By: {idNamePair.ownerUsername}</Typography>    
+                    <Typography sx={{fontSize: 15}}>By: <Box style={{display: 'inline'}} onClick={handleUsernameSearch}>{idNamePair.ownerUsername}</Box></Typography>    
                 </Grid>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={4}>
