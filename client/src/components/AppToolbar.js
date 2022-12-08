@@ -75,7 +75,7 @@ function AppToolbar() {
         <IconButton sx={HomeIconHighlight} onClick={(event) => {handleSwitchScreen("homeScreen")}}>
             <HomeIcon />
         </IconButton>
-    if(auth.user.email == "guest" && auth.user.username == "guest" && auth.user.firstName == "guest" && auth.user.lastName == "guest"){
+    if(auth.user.email == "guestaccount@gmail.com"){
         homeIcon = "";
     }
     

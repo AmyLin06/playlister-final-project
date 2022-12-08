@@ -13,7 +13,7 @@ function ListComment() {
     }
 
     function handleKeyPress(event){
-        if (event.code === "Enter" && store.currentList !== null && store.currentList.publishedDate !== undefined) {
+        if (event.code === "Enter" && store.currentList !== null && store.currentList.publishedDate !== undefined && auth.user.email !== "guestaccount@gmail.com") {
             let userComment = {
                 user: auth.user.username,
                 userComment: comment

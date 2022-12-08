@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import PublishIcon from '@mui/icons-material/Publish';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { Grid } from '@mui/material';
+import AuthContext from '../auth'
 
 const editToolbarButtonStyle = {
     fontSize: '10px',
@@ -23,7 +24,8 @@ const editToolbarButtonStyle = {
 */
 function EditToolbar() {
     const { store } = useContext(GlobalStoreContext);
-
+    const { auth } = useContext(AuthContext);
+    
     function handleAddNewSong() {
         store.addNewSong();
     }
@@ -40,7 +42,9 @@ function EditToolbar() {
         store.publishPlaylist()
     }
     function handleDuplicate() {
-        store.duplicatePlaylist();
+        if(auth.user.email !== "guestaccount@gmail.com"){
+            store.duplicatePlaylist();
+        }
     }
 
     if(store.currentList !== null && store.currentList.publishedDate !== undefined){

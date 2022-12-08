@@ -24,10 +24,14 @@ function Statusbar() {
             </IconButton>
             Add List
         </Box>
+
+    if(auth.user.email == "guestaccount@gmail.com"){
+        text = "";
+    }
+
     if (store.currentList && auth.loggedIn)
         text = store.currentList.name
      
-    
     return (
         <div id="playlister-statusbar">
             {/* <Typography variant="h4">{text}</Typography> */}

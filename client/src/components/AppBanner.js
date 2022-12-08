@@ -36,7 +36,7 @@ export default function AppBanner() {
     }
 
     const handleGuestLogin = () => {
-        auth.guestLogin();
+        auth.loginUser("guestaccount@gmail.com", "12345678", store);
     }
 
     const menuId = 'primary-search-account-menu';

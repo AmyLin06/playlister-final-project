@@ -97,10 +97,14 @@ function ListCard(props) {
     }
 
     function handleLikePlaylist() {
-        store.likePlaylist(idNamePair);
+        if(auth.user.email !== "guestaccount@gmail.com"){
+            store.likePlaylist(idNamePair);
+        }
     }
     function handleDislikePlaylist() {
-        store.dislikePlaylist(idNamePair);
+        if(auth.user.email !== "guestaccount@gmail.com"){
+            store.dislikePlaylist(idNamePair);
+        }
     }
 
     function handleUsernameSearch() {
